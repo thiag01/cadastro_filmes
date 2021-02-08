@@ -58,6 +58,20 @@ const montaItem = () => {
 }
 
 const cadastrar = () => {
-    document.getElementById('lista-filmes').insertAdjacentHTML('beforeEnd', montaItem());
-    dados = {};
-}
+         if(
+             dados.titulo == '' ||
+             dados.ano ==  0 ||
+             dados.categoria == '' ||
+             dados.link == ''
+
+         ){
+             alert('Preencha todos os campos')
+         }
+
+         else{
+             document.getElementById('lista-filmes').insertAdjacentHTML('beforeEnd', montaItem());
+             dados = {};
+         }
+
+    
+};
