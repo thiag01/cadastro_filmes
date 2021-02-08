@@ -1,4 +1,19 @@
+document.addEventListener('click', (e) => {
+    const listaClasse = Array.prototype.slice.call(e.target.classList)
 
+    if(e.target && listaClasse.includes('acessarFilme')){
+       const url = e.target.dataset.url;
+       window.open(url, '_blank')
+    }
+
+    if(e.target && listaClasse.includes('excluirFilme')){
+    const response = confirm('Deseja remover este item ?');
+     if(response){
+         const id = e.target.dataset.id;
+         document.getElementById(id).remove();
+     }
+    }
+});
 //apos declarar fora 
 let dados = {
     titulo: '',
@@ -24,26 +39,25 @@ const atualizarDados = () => {
 //criar uma nova tr na tabela com os dados do usuario
 
 const montaItem = () => {
-    const item = document.createElement('tr');
     const data = new Date();
     const id = data.getTime();
 
-    item.insertAdjacentHTML('beforeEnd',
+    const item = `
+       <tr id="${id}"> 
+            <td>${dados.titulo}</td>
+            <td>${dados.categoria} </td>
+            <td>${dados.ano}</td>
+            <td class="text-right">
+                <button class="btn btn-info acessarFilme" data-url="${dados.link}"> Acessar </button>
+                <button class="btn btn-danger excluirFilme" data-id="${id}"> Excluir </button>
+            </td>
+        </tr>
     `
-        <td>${dados.titulo}</td>
-        <td>${dados.categoria} </td>
-        <td>${dados.ano}</td>
-        <td class="text-right">
-            <button class="btn btn-info" data-url="${dados.link}"> Acessar </button>
-            <button class="btn btn-danger" data-id="${id}"> Excluir </button>
-        </td>
-    `
-        );
 
         return item;
 }
 
 const cadastrar = () => {
-    document.getElementById('lista-filmes').appendChild(montaItem());
+    document.getElementById('lista-filmes').insertAdjacentHTML('beforeEnd', montaItem());
     dados = {};
 }
